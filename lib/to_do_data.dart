@@ -1,88 +1,33 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// To parse this JSON data, do
 
-class TodoEnterData extends StatefulWidget {
-  final String? title;
-  final String? discription;
-  final String? time;
-  const TodoEnterData({Key? key, this.title, this.discription, this.time})
-      : super(key: key);
+import 'dart:convert';
 
-  @override
-  State<TodoEnterData> createState() => _TodoEnterDataState();
-}
+//final toDoModel = toDoModelFromJson(jsonString);
 
-class _TodoEnterDataState extends State<TodoEnterData> {
-  TextEditingController titlecontroller = TextEditingController();
-  TextEditingController discriptioncontroller = TextEditingController();
-  String? time = "";
+ToDoModel toDoModelFromJson(String str) => ToDoModel.fromJson(json.decode(str));
 
-  SharedPreferences? sharedPreferences;
+String toDoModelToJson(ToDoModel data) => json.encode(data.toJson());
 
-  setInstant() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-  }
+class ToDoModel {
+  String? title;
+  String? discription;
+  String? time;
 
-  setdata() {
-    Map<String, dynamic> data = {
-      "title": titlecontroller.text,
-      "discription": discriptioncontroller.text,
-      "time": time,
-    };
-  }
+  ToDoModel({
+    this.title,
+    this.discription,
+    this.time,
+  });
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    setInstant();
-    super.initState();
-  }
+  factory ToDoModel.fromJson(Map<String, dynamic> json) => ToDoModel(
+        title: json["title"],
+        discription: json["discription"],
+        time: json["time"],
+      );
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        title: const Text(
-          "Add Task",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height / 80,
-              horizontal: MediaQuery.of(context).size.height / 70,
-            ),
-            child: Column(
-              children: [
-                TextFild(),
-                SizedBox(height: MediaQuery.of(context).size.height / 50),
-                SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 15,
-                  child: ElevatedButton(
-                    style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.black),
-                    ),
-                    onPressed: () {
-                      setdata();
-                    },
-                    child: const Text("Add Task"),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "discription": discription,
+        "time": time,
+      };
 }

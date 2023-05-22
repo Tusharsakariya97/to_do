@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:saabay/home_screen.dart';
+import 'package:saabay/todo_enter_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: const TodoEnterData(),
     );
   }
 }
