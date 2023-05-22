@@ -24,7 +24,7 @@ class ToDoTile extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black12,
+            color: Colors.black26,
             offset: Offset(0, 1),
             blurRadius: 3,
           ),
